@@ -1,0 +1,53 @@
+<idea-plugin version="2">
+  <id>com.jetbrains.intellij.MyYouTrack</id>
+  <name>My youtrack</name>
+  <version>1.0.2</version>
+  <vendor email="kb@jetbrains.com" url="http://www.jetbrains.com">JetBrains Inc.</vendor>
+
+  <description><![CDATA[
+      Allows to work with your YouTrack issues from IntelliJ IDEs. Even offline!
+
+      Tested on Mac OS X only. Doesn't work under Darcula
+      ]]></description>
+
+
+  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
+  <idea-version since-build="130.100"/>
+
+  <depends>com.intellij.modules.lang</depends>
+
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
+
+  <project-components>
+    <component>
+        <implementation-class>com.intellij.youtrack.model.MyyStorage</implementation-class>
+    </component>
+  </project-components>
+
+  <actions>
+    <action id="OpenYouTrackTab" class="com.intellij.youtrack.actions.OpenYouTrackAction" text="My Issues" icon="/icons/youtrack.png">
+        <add-to-group group-id="ToolsMenu" anchor="last"/>
+    </action>
+      <group id="my.youtrack.main.toolbar">
+          <action id="myy.refresh" class="com.intellij.youtrack.actions.UpdateIssuesFromServerAction" icon="AllIcons.Actions.Refresh" text="Update issues from server">
+              <keyboard-shortcut keymap="$default" first-keystroke="control F5"/>
+              <keyboard-shortcut first-keystroke="meta R" keymap="Mac OS X"/>
+              <keyboard-shortcut first-keystroke="meta R" keymap="Mac OS X 10.5+"/>
+          </action>
+      </group>
+      <group id="my.youtrack.context.menu">
+          <group text="Mark" popup="true">
+          <action id="myy.markAsRead" class="com.intellij.youtrack.actions.MarkAsReadAction" text="As Read"/>
+          <action id="myy.markAsUnread" class="com.intellij.youtrack.actions.MarkAsUnreadAction" text="As Unread"/>
+          </group>
+      </group>
+  </actions>
+
+  <extensions defaultExtensionNs="com.intellij">
+      <virtualFileSystem id="Myy" key="myy" implementationClass="com.intellij.youtrack.fs.MyyFileSystem"/>
+      <fileEditorProvider id="Myy" implementation="com.intellij.youtrack.editor.MyyFileEditorProvider"/>
+      <fileIconProvider id="Myy" implementation="com.intellij.youtrack.editor.MyyFileIconProvider"/>
+  </extensions>
+</idea-plugin>
